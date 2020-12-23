@@ -40,10 +40,10 @@ class Airplane{
         consumption = 2400
         speed = 847.00
         demolitionSpeed = 235
-        maxTime = 120
+        maxTime = 12
         distance = 0
         duration = 0
-        crashReason = false
+        crashReason = true
         
         image = UIImageView(image: UIImage(imageLiteralResourceName: "airplane_red"))
         image.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2))
@@ -52,13 +52,4 @@ class Airplane{
         image.center.y = screenHeight - 175
         print(screenHeight)
     }
-    
-    func getCurrentSpeed(){
-        
-    }
-    
-    func getCurrentAirplaneHeight(){
-        
-    }
-    
 }

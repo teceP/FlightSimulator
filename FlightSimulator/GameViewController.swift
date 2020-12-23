@@ -15,6 +15,7 @@ class GameViewController: UIViewController {
     let startDate = Date()
     let screenWidth = UIScreen.main.fixedCoordinateSpace.bounds.width
     let screenHeight = UIScreen.main.fixedCoordinateSpace.bounds.height
+    var runningTime = 0.0
     
     var cloudSpawnY: Float = 0
     var airplaneWidth: CGFloat = 0
@@ -25,6 +26,7 @@ class GameViewController: UIViewController {
     var difficulty = 200
     var minSpawnDistance = 1.0
     var cloudSpeed = 2.0
+    var wind = 0.0
     var loops = 0
     
     var distanceTimestampPerSpeed : Array<DistanceMeasurement> = Array()
@@ -42,7 +44,7 @@ class GameViewController: UIViewController {
         fileManagerUrls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
         cloudSpawnY = Float(screenHeight - 20.0)
         self.view.addSubview(airplane.image)
-        timeLabel.text = String(120.0)
+        timeLabel.text = String(airplane.maxTime)
         speedLabel.text = String(airplane.speed)
         distanceLabel.text = String(airplane.distance)
         distanceTimestampPerSpeed.append(DistanceMeasurement(speed: airplane.speed))
@@ -63,6 +65,7 @@ class GameViewController: UIViewController {
         for index in clouds.indices {
             if(clouds[index].collided == false && clouds[index].image.frame.intersects(airplane.image.frame)){
                 clouds[index].collided = true
+                clouds[index].image.backgroundColor = UIColor.red
                 print("Cloud is in same frame as airplane")
                 return true
             }
@@ -71,10 +74,10 @@ class GameViewController: UIViewController {
     }
 
     
-    func updateValues(runningTime: TimeInterval){
+    func updateValues(){
         loops += 1
     
-        timeLabel.text = String(Double(120.0 - runningTime).roundToDecimal(2))
+        timeLabel.text = String(Double(airplane.maxTime - self.runningTime).roundToDecimal(2))
         speedLabel.text = String(airplane.speed.roundToDecimal(2))
         
         distanceTimestampPerSpeed[distanceTimestampPerSpeed.count-1].distanceInMeter = computeDistanceForCurrentSpeed()
@@ -92,8 +95,8 @@ class GameViewController: UIViewController {
             true = game is over
             false = game is not over
      */
-    func checkGameStatus(timeDifference: TimeInterval) -> Bool{
-        if timeDifference >= self.airplane.maxTime {
+    func checkGameStatus() -> Bool{
+        if runningTime >= self.airplane.maxTime {
             return true
         }else if airplane.speed <= airplane.demolitionSpeed {
             return true
@@ -119,9 +122,14 @@ class GameViewController: UIViewController {
         }
     }
     
+    func moveCloud(cloud: Cloud){
+        cloud.image.frame.origin.y += CGFloat(self.cloudSpeed)
+        cloud.image.frame.origin.x += CGFloat(self.wind)
+    }
+    
     func removeCloud(){
         for (i, cloud) in self.clouds.enumerated().reversed() {
-            cloud.image.frame.origin.y += CGFloat(self.cloudSpeed)
+            moveCloud(cloud: cloud)
             if cloud.image.frame.origin.y > self.screenHeight{
                 self.clouds.remove(at: i)
                 print("Cloud delete")
@@ -129,30 +137,53 @@ class GameViewController: UIViewController {
         }
     }
     
+    func computeDifficulty(){
+    }
+    
+    func computeWind(){
+        
+        if(wind < 5 && difficulty < 100){
+            wind += self.runningTime
+        }
+        
+    }
+    
+    func stopClouds(){
+        clouds.forEach{cloud in
+            cloud.image.layer.removeAllAnimations()
+        }
+    }
+    
     func gameLoop(){
+        var doLoop = true
         Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { (aTimer) in
-            if self.didCollide(){
-                self.airplane.speed = self.airplane.speed - (self.airplane.speed * 0.25)
-                self.airplane.distance += self.distanceTimestampPerSpeed[self.distanceTimestampPerSpeed.count-1].distanceInMeter
-                self.distanceTimestampPerSpeed.append(DistanceMeasurement(speed: self.airplane.speed))
-                self.speedLabel.text = String(self.airplane.speed)
-                print("crash!")
-            }
-            
-            self.manageClouds()
-            
-            let timeDifference = aTimer.fireDate.timeIntervalSince(self.startDate)
-            
-            if self.checkGameStatus(timeDifference: timeDifference){
+            if self.checkGameStatus(){
                 aTimer.invalidate()
-                print("END")
+                doLoop = false
+                print("Game is over")
+                self.stopClouds()
                 self.gameOverLabel.text = "Game Over"
+                self.airplane.distance += self.airplane.distance + self.computeDistanceForCurrentSpeed()
                 if self.isTopTenGame() {
-                    self.storeGame(runningTime: timeDifference)
+                    self.storeGame()
                 }
             }
-            
-            self.updateValues(runningTime: timeDifference)
+              
+            if doLoop {
+                if self.didCollide(){
+                                self.airplane.speed = self.airplane.speed - (self.airplane.speed * 0.25)
+                                self.airplane.distance += self.distanceTimestampPerSpeed[self.distanceTimestampPerSpeed.count-1].distanceInMeter
+                                self.distanceTimestampPerSpeed.append(DistanceMeasurement(speed: self.airplane.speed))
+                                self.speedLabel.text = String(self.airplane.speed)
+                                print("Crashed with cloud")
+                            }
+                            
+                            self.computeDifficulty()
+                            self.computeWind()
+                            self.manageClouds()
+                            self.runningTime = aTimer.fireDate.timeIntervalSince(self.startDate)
+                            self.updateValues()
+            }
         }
     }
     
@@ -161,7 +192,6 @@ class GameViewController: UIViewController {
             if let docDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first{
                 let fileURL = docDir.appendingPathComponent("results.txt")
                 let jsonString = try String(contentsOf: fileURL)
-                print("jsonString:", jsonString)
                 let jsonData = jsonString.data(using: .utf8) ?? Data()
                 let array = try JSONDecoder().decode([GameResult].self, from: jsonData)
                 print("Saved new game result list successfully.")
@@ -201,16 +231,27 @@ class GameViewController: UIViewController {
         return gameResults
     }
     
-    func storeGame(runningTime: TimeInterval){
-        var gameResultArray = GameViewController.getGameResultArray()
+    func createGameResult() -> GameResult {
+        if(airplane.speed <= airplane.demolitionSpeed){
+            airplane.crashReason = false
+        }
+                
         let result = GameResult(distance: self.airplane.distance.roundToDecimal(2), runningTime: runningTime.roundToDecimal(2), startedAt: startDate, endingSpeed: airplane.speed.roundToDecimal(2), crashReason: airplane.crashReason)
         
+        return result
+    }
+    
+    func storeGame(){
+        var gameResultArray = GameViewController.getGameResultArray()
+        let result = createGameResult()
+        
+        print("Try to store Object: ", result.description())
+
         gameResultArray = replaceOrAddGameResult(newGameResult: result)
 
         let json = try! JSONEncoder().encode(gameResultArray)
         let jsonString = String(data: json, encoding: .utf8)!
         
-        print(jsonString)
         do {
             if let docDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                 

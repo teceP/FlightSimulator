@@ -17,6 +17,19 @@ class CloudFabric {
         let imgView = UIImageView(image: UIImage(imageLiteralResourceName: "wolke"))
         let size = CGFloat(Double.random(in: 0.08..<0.2))
         imgView.frame = CGRect(x: x, y: 0, width: screenWidth * size, height: screenWidth * size)
+        
+        let animation = CAKeyframeAnimation()
+        animation.keyPath = "position"
+        animation.duration = 60
+        animation.isAdditive = true
+        animation.values = (0..<300).map({(y: Int) -> NSValue in
+            let yPos = CGFloat(y)
+            let xPos = sin(yPos)
+            let point = CGPoint(x: xPos * 20, y: yPos)
+            return NSValue(cgPoint: point)
+        })
+        
+        imgView.layer.add(animation, forKey: "basic")
 
         return Cloud(image: imgView, date: Date())
     }
