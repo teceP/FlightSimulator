@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC8D0F0C25864D3A00E8B652 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D0F0B25864D3A00E8B652 /* TableViewController.swift */; };
+		AC8D0F212587FAA200E8B652 /* CloudFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D0F202587FAA200E8B652 /* CloudFabric.swift */; };
+		AC8D0F262588051A00E8B652 /* Airplane.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D0F252588051A00E8B652 /* Airplane.swift */; };
 		ACA8CD862583F05B00B3D55E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CD852583F05B00B3D55E /* AppDelegate.swift */; };
 		ACA8CD882583F05B00B3D55E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CD872583F05B00B3D55E /* SceneDelegate.swift */; };
 		ACA8CD8A2583F05B00B3D55E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CD892583F05B00B3D55E /* ViewController.swift */; };
@@ -15,6 +18,7 @@
 		ACA8CD922583F05B00B3D55E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA8CD902583F05B00B3D55E /* LaunchScreen.storyboard */; };
 		ACA8CD9D2583F05C00B3D55E /* FlightSimulatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CD9C2583F05C00B3D55E /* FlightSimulatorTests.swift */; };
 		ACA8CDA82583F05C00B3D55E /* FlightSimulatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CDA72583F05C00B3D55E /* FlightSimulatorUITests.swift */; };
+		ACA8CDB92583F43400B3D55E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CDB82583F43400B3D55E /* GameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC8D0F0B25864D3A00E8B652 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		AC8D0F202587FAA200E8B652 /* CloudFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFabric.swift; sourceTree = "<group>"; };
+		AC8D0F252588051A00E8B652 /* Airplane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airplane.swift; sourceTree = "<group>"; };
 		ACA8CD822583F05B00B3D55E /* FlightSimulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlightSimulator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACA8CD852583F05B00B3D55E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ACA8CD872583F05B00B3D55E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +56,7 @@
 		ACA8CDA32583F05C00B3D55E /* FlightSimulatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlightSimulatorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACA8CDA72583F05C00B3D55E /* FlightSimulatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightSimulatorUITests.swift; sourceTree = "<group>"; };
 		ACA8CDA92583F05C00B3D55E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ACA8CDB82583F43400B3D55E /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +111,10 @@
 				ACA8CD872583F05B00B3D55E /* SceneDelegate.swift */,
 				ACA8CD892583F05B00B3D55E /* ViewController.swift */,
 				ACA8CD8B2583F05B00B3D55E /* Main.storyboard */,
+				AC8D0F252588051A00E8B652 /* Airplane.swift */,
+				AC8D0F0B25864D3A00E8B652 /* TableViewController.swift */,
+				ACA8CDB82583F43400B3D55E /* GameViewController.swift */,
+				AC8D0F202587FAA200E8B652 /* CloudFabric.swift */,
 				ACA8CD8E2583F05B00B3D55E /* Assets.xcassets */,
 				ACA8CD902583F05B00B3D55E /* LaunchScreen.storyboard */,
 				ACA8CD932583F05B00B3D55E /* Info.plist */,
@@ -258,8 +270,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACA8CDB92583F43400B3D55E /* GameViewController.swift in Sources */,
 				ACA8CD8A2583F05B00B3D55E /* ViewController.swift in Sources */,
+				AC8D0F212587FAA200E8B652 /* CloudFabric.swift in Sources */,
 				ACA8CD862583F05B00B3D55E /* AppDelegate.swift in Sources */,
+				AC8D0F262588051A00E8B652 /* Airplane.swift in Sources */,
+				AC8D0F0C25864D3A00E8B652 /* TableViewController.swift in Sources */,
 				ACA8CD882583F05B00B3D55E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

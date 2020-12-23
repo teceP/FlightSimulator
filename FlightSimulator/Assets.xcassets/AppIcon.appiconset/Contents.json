@@ -1,41 +1,49 @@
 {
   "images" : [
     {
+      "filename" : "icons8-flugzeug-abflug-103.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
+      "filename" : "icons8-flugzeug-abflug-104.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
     },
     {
+      "filename" : "icons8-flugzeug-abflug-105.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
+      "filename" : "icons8-flugzeug-abflug-106.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
+      "filename" : "icons8-flugzeug-abflug-80.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
+      "filename" : "icons8-flugzeug-abflug-102.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
+      "filename" : "icons8-flugzeug-abflug-100.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
+      "filename" : "icons8-flugzeug-abflug-101.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
