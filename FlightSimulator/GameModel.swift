@@ -8,6 +8,7 @@
 import Foundation
 
 class GameModel{
+    var doLoop = true
     let fileManager = FileManager.default
     var fileManagerUrls: [URL] = [URL]()
     let startDate = Date()

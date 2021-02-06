@@ -11,6 +11,7 @@
 		AC20835225CE0C4E0020CA1A /* PressableButton in Frameworks */ = {isa = PBXBuildFile; productRef = AC20835125CE0C4E0020CA1A /* PressableButton */; };
 		AC20835725CE0CFF0020CA1A /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC20835625CE0CFF0020CA1A /* GameModel.swift */; };
 		AC20836F25CF32470020CA1A /* PostGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC20836E25CF32470020CA1A /* PostGameController.swift */; };
+		AC20837725CF49770020CA1A /* background_music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC20837625CF49760020CA1A /* background_music.mp3 */; };
 		AC8D0F0C25864D3A00E8B652 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D0F0B25864D3A00E8B652 /* TableViewController.swift */; };
 		AC8D0F212587FAA200E8B652 /* EnemyFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D0F202587FAA200E8B652 /* EnemyFabric.swift */; };
 		AC8D0F262588051A00E8B652 /* Airplane.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D0F252588051A00E8B652 /* Airplane.swift */; };
@@ -48,6 +49,7 @@
 		AC20835E25CF07770020CA1A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		AC20836225CF07770020CA1A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AC20836E25CF32470020CA1A /* PostGameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostGameController.swift; sourceTree = "<group>"; };
+		AC20837625CF49760020CA1A /* background_music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background_music.mp3; sourceTree = "<group>"; };
 		AC8D0F0B25864D3A00E8B652 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		AC8D0F202587FAA200E8B652 /* EnemyFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyFabric.swift; sourceTree = "<group>"; };
 		AC8D0F252588051A00E8B652 /* Airplane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airplane.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 		ACA8CD792583F05B00B3D55E = {
 			isa = PBXGroup;
 			children = (
+				AC20837625CF49760020CA1A /* background_music.mp3 */,
 				ACA8CD842583F05B00B3D55E /* FlightSimulator */,
 				ACA8CD9B2583F05C00B3D55E /* FlightSimulatorTests */,
 				ACA8CDA62583F05C00B3D55E /* FlightSimulatorUITests */,
@@ -263,6 +266,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC20837725CF49770020CA1A /* background_music.mp3 in Resources */,
 				ACA8CD922583F05B00B3D55E /* LaunchScreen.storyboard in Resources */,
 				ACA8CD8F2583F05B00B3D55E /* Assets.xcassets in Resources */,
 				ACA8CD8D2583F05B00B3D55E /* Main.storyboard in Resources */,

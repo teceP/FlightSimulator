@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class GameViewController: UIViewController {
     
@@ -32,7 +33,8 @@ class GameViewController: UIViewController {
             diffi = 1
         }
         
-        gameModel.difficulty = Int(diffi * 400)
+        gameModel.cloudSpeed = gameModel.cloudSpeed + Double(diffi/150)
+        gameModel.difficulty = Int(diffi)
         gameModel.fileManagerUrls = gameModel.fileManager.urls(for: .documentDirectory, in: .userDomainMask)
         gameModel.cloudSpawnY = Float(screenHeight - 20.0)
         self.view.addSubview(airplane.image)
@@ -42,7 +44,23 @@ class GameViewController: UIViewController {
         difficultyLabel.text = String(Double(diffi).roundToDecimal(2))
         gameModel.distanceTimestampPerSpeed.append(DistanceMeasurement(speed: airplane.speed))
         
+        do {
+            let url = Bundle.main.url(forResource: "background_music", withExtension: "mp3")
+            var player = AVAudioPlayer()
+            player = try AVAudioPlayer(contentsOf: url!)
+            player.prepareToPlay()
+            player.play()
+           } catch let error as NSError {
+               print("Failed to init audio player: \(error)")
+           }
+        
         gameLoop()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        gameModel.doLoop = false
+        print("Game loop stopped.")
     }
 
     @IBAction func onMusicOptionChanged(_ sender: UIButton) {
@@ -95,17 +113,18 @@ class GameViewController: UIViewController {
         }
         return false
     }
-    
-    func manageClouds(){
-        self.removeCloud()
-        self.createCloud()
-    }
+
     
     func createCloud(){
         let distanceToLatest = gameModel.clouds.last?.date.distance(to: Date())
         if gameModel.clouds.count == 0 || gameModel.clouds.count < 5 && distanceToLatest! > gameModel.minSpawnDistance {
             print("loop: " , gameModel.loops , " diff: " , gameModel.difficulty)
             let mod = gameModel.loops % gameModel.difficulty
+            
+            let random = Int.random(in: 0..<10)
+            
+            //TODO
+            
             if mod == 0{
                 let c = self.cloudFabric.createCloud()
                 self.view.addSubview(c.image)
@@ -131,8 +150,9 @@ class GameViewController: UIViewController {
     }
     
     func computeWind(){
+        print("wind: ", gameModel.wind)
         if(gameModel.wind < 5 && gameModel.difficulty < 100){
-            gameModel.wind += gameModel.runningTime
+            gameModel.wind += Double((gameModel.difficulty / 4000))
         }
         
     }
@@ -144,11 +164,10 @@ class GameViewController: UIViewController {
     }
     
     func gameLoop(){
-        var doLoop = true
         Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { (aTimer) in
             if self.checkGameStatus(){
                 aTimer.invalidate()
-                doLoop = false
+                self.gameModel.doLoop = false
                 print("Game is over")
                 self.stopClouds()
                 self.gameOverLabel.text = "Game Over"
@@ -158,25 +177,23 @@ class GameViewController: UIViewController {
                 }
             }
               
-            if doLoop {
+            if self.gameModel.doLoop {
                 if self.didCollide(){
-                                self.airplane.speed = self.airplane.speed - (self.airplane.speed * 0.25)
+                    self.airplane.speed = self.airplane.speed - (self.airplane.speed * 0.25)
                     self.airplane.distance += self.gameModel.distanceTimestampPerSpeed[self.gameModel.distanceTimestampPerSpeed.count-1].distanceInMeter
                     self.gameModel.distanceTimestampPerSpeed.append(DistanceMeasurement(speed: self.airplane.speed))
-                                self.speedLabel.text = String(self.airplane.speed)
+                    self.speedLabel.text = String(self.airplane.speed)
                                 print("Crashed with cloud")
-                            }
+                }
                             
-                            self.computeWind()
-                            self.manageClouds()
+                self.computeWind()
+                self.removeCloud()
+                self.createCloud()
                 self.gameModel.runningTime = aTimer.fireDate.timeIntervalSince(self.gameModel.startDate)
-                            self.updateValues()
+                self.updateValues()
             }
         }
     }
-
-
-    
 
     func showToast(message : String) {
 
