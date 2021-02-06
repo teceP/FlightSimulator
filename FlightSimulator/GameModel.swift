@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import AVFoundation
 
 class GameModel{
     var doLoop = true
+    var player = AVAudioPlayer()
     let fileManager = FileManager.default
     var fileManagerUrls: [URL] = [URL]()
     let startDate = Date()
@@ -20,6 +22,5 @@ class GameModel{
     var cloudSpeed = 2.0
     var wind = 0.0
     var loops = 0
-    var musicOn = true
     var distanceTimestampPerSpeed : Array<DistanceMeasurement> = Array()
 }

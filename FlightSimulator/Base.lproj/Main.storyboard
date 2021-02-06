@@ -171,7 +171,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29r-EC-I9g">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29r-EC-I9g">
                                 <rect key="frame" x="20" y="108" width="45" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
@@ -180,7 +180,19 @@
                                     <imageReference key="image" image="volume.3" catalog="system" symbolScale="large"/>
                                 </state>
                                 <connections>
-                                    <action selector="onMusicOptionChanged:" destination="UI0-73-Tcj" eventType="touchUpInside" id="lNr-c2-ugU"/>
+                                    <action selector="onMusicOnButtonClicked:" destination="UI0-73-Tcj" eventType="touchUpInside" id="cH6-7M-ies"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gFC-IO-diM">
+                                <rect key="frame" x="13" y="109" width="45" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="volume.slash" catalog="system" symbolScale="large"/>
+                                </state>
+                                <connections>
+                                    <action selector="onMusicOffButtonClicked:" destination="UI0-73-Tcj" eventType="touchUpInside" id="0F0-7l-P7F"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -195,6 +207,8 @@
                         <outlet property="difficultyLabel" destination="WZH-yc-14y" id="gac-sS-pOQ"/>
                         <outlet property="distanceLabel" destination="Lai-up-2jN" id="HdD-Ao-2AV"/>
                         <outlet property="gameOverLabel" destination="BtG-cS-hGa" id="Koy-Kl-qe3"/>
+                        <outlet property="musicOffButton" destination="gFC-IO-diM" id="chy-fj-NlX"/>
+                        <outlet property="musicOnButton" destination="29r-EC-I9g" id="nMN-KP-Bdi"/>
                         <outlet property="speedLabel" destination="xDX-JK-N82" id="eQg-bg-vYD"/>
                         <outlet property="timeLabel" destination="imR-le-zxe" id="Dwf-Ky-0cT"/>
                     </connections>
@@ -286,6 +300,7 @@
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="ghost" width="476" height="488"/>
         <image name="volume.3" catalog="system" width="128" height="86"/>
+        <image name="volume.slash" catalog="system" width="124" height="128"/>
         <image name="wolke" width="256" height="256"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

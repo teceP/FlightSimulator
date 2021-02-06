@@ -17,7 +17,8 @@ class GameViewController: UIViewController {
     var screenWidth = UIScreen.main.fixedCoordinateSpace.bounds.width
     var screenHeight = UIScreen.main.fixedCoordinateSpace.bounds.height
     
-    @IBOutlet weak var musicImage: UIImageView!
+    @IBOutlet weak var musicOnButton: UIButton!
+    @IBOutlet weak var musicOffButton: UIButton!
     @IBOutlet weak var speedLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -46,10 +47,8 @@ class GameViewController: UIViewController {
         
         do {
             let url = Bundle.main.url(forResource: "background_music", withExtension: "mp3")
-            var player = AVAudioPlayer()
-            player = try AVAudioPlayer(contentsOf: url!)
-            player.prepareToPlay()
-            player.play()
+            gameModel.player = try AVAudioPlayer(contentsOf: url!)
+            gameModel.player.play()
            } catch let error as NSError {
                print("Failed to init audio player: \(error)")
            }
@@ -60,12 +59,22 @@ class GameViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         gameModel.doLoop = false
+        gameModel.player.stop()
         print("Game loop stopped.")
     }
-
-    @IBAction func onMusicOptionChanged(_ sender: UIButton) {
-        gameModel.musicOn = !gameModel.musicOn
-        showToast(message: (gameModel.musicOn ? "Music on." : "Music off."))
+    
+    @IBAction func onMusicOnButtonClicked(_ sender: UIButton) {
+        showToast(message:  "Music on.")
+        musicOnButton.isHidden = true
+        musicOffButton.isHidden = false
+        gameModel.player.play()
+    }
+    
+    @IBAction func onMusicOffButtonClicked(_ sender: UIButton) {
+        showToast(message:  "Music off.")
+        musicOnButton.isHidden = false
+        musicOffButton.isHidden = true
+        gameModel.player.pause()
     }
     
     @IBAction func moveAirplane(_ sender: UISlider) {
@@ -171,6 +180,7 @@ class GameViewController: UIViewController {
                 print("Game is over")
                 self.stopClouds()
                 self.gameOverLabel.text = "Game Over"
+                self.gameModel.player.stop()
                 self.airplane.distance += self.airplane.distance + self.computeDistanceForCurrentSpeed()
                 if self.postGameController.isTopTenGame(airplane: self.airplane) {
                     self.postGameController.storeGame(airplane: self.airplane, gameModel: self.gameModel)

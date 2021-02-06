@@ -40,7 +40,7 @@ class Airplane{
         consumption = 2400
         speed = 847.00
         demolitionSpeed = 235
-        maxTime = 12
+        maxTime = 120
         distance = 0
         duration = 0
         crashReason = true
