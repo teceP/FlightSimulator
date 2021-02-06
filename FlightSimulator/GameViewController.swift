@@ -33,7 +33,8 @@ class GameViewController: UIViewController {
         if diffi < 1 {
             diffi = 1
         }
-        
+        gameModel.maxRandom = gameModel.maxRandom - Int(diffi)
+        print("Max random: ", gameModel.maxRandom)
         gameModel.cloudSpeed = gameModel.cloudSpeed + Double(diffi/150)
         gameModel.difficulty = Int(diffi)
         gameModel.fileManagerUrls = gameModel.fileManager.urls(for: .documentDirectory, in: .userDomainMask)
@@ -127,14 +128,9 @@ class GameViewController: UIViewController {
     func createCloud(){
         let distanceToLatest = gameModel.clouds.last?.date.distance(to: Date())
         if gameModel.clouds.count == 0 || gameModel.clouds.count < 5 && distanceToLatest! > gameModel.minSpawnDistance {
-            print("loop: " , gameModel.loops , " diff: " , gameModel.difficulty)
-            let mod = gameModel.loops % gameModel.difficulty
             
-            let random = Int.random(in: 0..<10)
-            
-            //TODO
-            
-            if mod == 0{
+            let random = Int.random(in: 0..<gameModel.maxRandom)
+            if random < gameModel.difficulty{
                 let c = self.cloudFabric.createCloud()
                 self.view.addSubview(c.image)
                 gameModel.clouds.append(c)
@@ -159,11 +155,9 @@ class GameViewController: UIViewController {
     }
     
     func computeWind(){
-        print("wind: ", gameModel.wind)
-        if(gameModel.wind < 5 && gameModel.difficulty < 100){
-            gameModel.wind += Double((gameModel.difficulty / 4000))
+        if(gameModel.wind < 5 && gameModel.difficulty > 200){
+            gameModel.wind += Double((gameModel.difficulty / 400))
         }
-        
     }
     
     func stopClouds(){

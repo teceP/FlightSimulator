@@ -25,6 +25,17 @@ class ViewController: UIViewController {
         difficultySlider.value = difficulty
         setDifficultyLabel(difficulty: difficulty)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+
+    }
 
     @IBAction func onDifficultyOptionChanged(_ sender: UISlider) {
         defaults.set(sender.value, forKey: Constants.DIFFICULTY_OPTION)

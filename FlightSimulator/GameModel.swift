@@ -11,6 +11,7 @@ import AVFoundation
 class GameModel{
     var doLoop = true
     var player = AVAudioPlayer()
+    var maxRandom = 1200
     let fileManager = FileManager.default
     var fileManagerUrls: [URL] = [URL]()
     let startDate = Date()
