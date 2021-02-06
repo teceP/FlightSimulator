@@ -9,83 +9,75 @@ import UIKit
 
 class GameViewController: UIViewController {
     
-    let fileManager = FileManager.default
-    var fileManagerUrls: [URL] = [URL]()
-    
-    let startDate = Date()
-    let screenWidth = UIScreen.main.fixedCoordinateSpace.bounds.width
-    let screenHeight = UIScreen.main.fixedCoordinateSpace.bounds.height
-    var runningTime = 0.0
-    
-    var cloudSpawnY: Float = 0
-    var airplaneWidth: CGFloat = 0
-    var clouds: Array<Cloud> = Array()
-    var cloudFabric: CloudFabric = CloudFabric()
+    var cloudFabric: EnemyFabric = EnemyFabric()
     var airplane = Airplane()
+    var gameModel: GameModel = GameModel()
+    let postGameController: PostGameController = PostGameController()
+    var screenWidth = UIScreen.main.fixedCoordinateSpace.bounds.width
+    var screenHeight = UIScreen.main.fixedCoordinateSpace.bounds.height
     
-    var difficulty = 200
-    var minSpawnDistance = 1.0
-    var cloudSpeed = 2.0
-    var wind = 0.0
-    var loops = 0
-    
-    var distanceTimestampPerSpeed : Array<DistanceMeasurement> = Array()
-                
+    @IBOutlet weak var musicImage: UIImageView!
     @IBOutlet weak var speedLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var gameOverLabel: UILabel!
     @IBOutlet weak var background: UIImageView!
+    @IBOutlet weak var difficultyLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //background.image = UIImage(named: "background")
-        //background.contentMode = .scaleAspectFill
-        fileManagerUrls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
-        cloudSpawnY = Float(screenHeight - 20.0)
+        
+        var diffi = UserDefaults.standard.float(forKey: Constants.DIFFICULTY_OPTION) * 400
+        if diffi < 1 {
+            diffi = 1
+        }
+        
+        gameModel.difficulty = Int(diffi * 400)
+        gameModel.fileManagerUrls = gameModel.fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+        gameModel.cloudSpawnY = Float(screenHeight - 20.0)
         self.view.addSubview(airplane.image)
         timeLabel.text = String(airplane.maxTime)
         speedLabel.text = String(airplane.speed)
         distanceLabel.text = String(airplane.distance)
-        distanceTimestampPerSpeed.append(DistanceMeasurement(speed: airplane.speed))
-        
+        difficultyLabel.text = String(Double(diffi).roundToDecimal(2))
+        gameModel.distanceTimestampPerSpeed.append(DistanceMeasurement(speed: airplane.speed))
         
         gameLoop()
     }
 
-    @IBAction func moveAirplane(_ sender: UISlider) {
-        airplane.image.center.x = ((screenWidth/2) + (CGFloat(sender.value) * 300)) - 150
+    @IBAction func onMusicOptionChanged(_ sender: UIButton) {
+        gameModel.musicOn = !gameModel.musicOn
+        showToast(message: (gameModel.musicOn ? "Music on." : "Music off."))
     }
     
-    func computeMovement(slider: Float){
-        
+    @IBAction func moveAirplane(_ sender: UISlider) {
+        airplane.image.center.x = ((CGFloat(screenWidth/2)) + (CGFloat(sender.value) * 300)) - 150
     }
     
     func didCollide() -> Bool {
-        for index in clouds.indices {
-            if(clouds[index].collided == false && clouds[index].image.frame.intersects(airplane.image.frame)){
-                clouds[index].collided = true
-                clouds[index].image.backgroundColor = UIColor.red
+        for index in gameModel.clouds.indices {
+            if(gameModel.clouds[index].collided == false && gameModel.clouds[index].image.frame.intersects(airplane.image.frame)){
+                gameModel.clouds[index].collided = true
+                gameModel.clouds[index].image.backgroundColor = UIColor.red
                 print("Cloud is in same frame as airplane")
                 return true
             }
         }
         return false
     }
-
     
     func updateValues(){
-        loops += 1
+        gameModel.loops += 1
     
-        timeLabel.text = String(Double(airplane.maxTime - self.runningTime).roundToDecimal(2))
+        timeLabel.text = String(Double(airplane.maxTime - gameModel.runningTime).roundToDecimal(2))
         speedLabel.text = String(airplane.speed.roundToDecimal(2))
         
-        distanceTimestampPerSpeed[distanceTimestampPerSpeed.count-1].distanceInMeter = computeDistanceForCurrentSpeed()
-        distanceLabel.text = String((airplane.distance + distanceTimestampPerSpeed[distanceTimestampPerSpeed.count-1].distanceInMeter).roundToDecimal(2))
+        gameModel.distanceTimestampPerSpeed[gameModel.distanceTimestampPerSpeed.count-1].distanceInMeter = computeDistanceForCurrentSpeed()
+        distanceLabel.text = String((airplane.distance + gameModel.distanceTimestampPerSpeed[gameModel.distanceTimestampPerSpeed.count-1].distanceInMeter).roundToDecimal(2))
     }
     
     func computeDistanceForCurrentSpeed() -> Double{
-        let temp = distanceTimestampPerSpeed[distanceTimestampPerSpeed.count-1]
+        let temp = gameModel.distanceTimestampPerSpeed[gameModel.distanceTimestampPerSpeed.count-1]
         let meterPerSeconds = airplane.speed / 3.6
         let secondsWithThisSpeed = temp.createdAt.distance(to: Date())
         return meterPerSeconds * secondsWithThisSpeed
@@ -96,7 +88,7 @@ class GameViewController: UIViewController {
             false = game is not over
      */
     func checkGameStatus() -> Bool{
-        if runningTime >= self.airplane.maxTime {
+        if gameModel.runningTime >= self.airplane.maxTime {
             return true
         }else if airplane.speed <= airplane.demolitionSpeed {
             return true
@@ -110,46 +102,43 @@ class GameViewController: UIViewController {
     }
     
     func createCloud(){
-        let distanceToLatest = self.clouds.last?.date.distance(to: Date())
-        if self.clouds.count == 0 || self.clouds.count < 5 && distanceToLatest! > self.minSpawnDistance {
-            let mod = self.loops % self.difficulty
+        let distanceToLatest = gameModel.clouds.last?.date.distance(to: Date())
+        if gameModel.clouds.count == 0 || gameModel.clouds.count < 5 && distanceToLatest! > gameModel.minSpawnDistance {
+            print("loop: " , gameModel.loops , " diff: " , gameModel.difficulty)
+            let mod = gameModel.loops % gameModel.difficulty
             if mod == 0{
                 let c = self.cloudFabric.createCloud()
                 self.view.addSubview(c.image)
-                self.clouds.append(c)
-                print("Cloud created. ", self.clouds.count, " are active.")
+                gameModel.clouds.append(c)
+                print("Cloud created. ", gameModel.clouds.count, " are active.")
             }
         }
     }
     
     func moveCloud(cloud: Cloud){
-        cloud.image.frame.origin.y += CGFloat(self.cloudSpeed)
-        cloud.image.frame.origin.x += CGFloat(self.wind)
+        cloud.image.frame.origin.y += CGFloat(gameModel.cloudSpeed)
+        cloud.image.frame.origin.x += CGFloat(gameModel.wind)
     }
     
     func removeCloud(){
-        for (i, cloud) in self.clouds.enumerated().reversed() {
+        for (i, cloud) in gameModel.clouds.enumerated().reversed() {
             moveCloud(cloud: cloud)
-            if cloud.image.frame.origin.y > self.screenHeight{
-                self.clouds.remove(at: i)
+            if cloud.image.frame.origin.y > CGFloat(screenHeight){
+                gameModel.clouds.remove(at: i)
                 print("Cloud delete")
             }
         }
     }
     
-    func computeDifficulty(){
-    }
-    
     func computeWind(){
-        
-        if(wind < 5 && difficulty < 100){
-            wind += self.runningTime
+        if(gameModel.wind < 5 && gameModel.difficulty < 100){
+            gameModel.wind += gameModel.runningTime
         }
         
     }
     
     func stopClouds(){
-        clouds.forEach{cloud in
+        gameModel.clouds.forEach{cloud in
             cloud.image.layer.removeAllAnimations()
         }
     }
@@ -164,104 +153,48 @@ class GameViewController: UIViewController {
                 self.stopClouds()
                 self.gameOverLabel.text = "Game Over"
                 self.airplane.distance += self.airplane.distance + self.computeDistanceForCurrentSpeed()
-                if self.isTopTenGame() {
-                    self.storeGame()
+                if self.postGameController.isTopTenGame(airplane: self.airplane) {
+                    self.postGameController.storeGame(airplane: self.airplane, gameModel: self.gameModel)
                 }
             }
               
             if doLoop {
                 if self.didCollide(){
                                 self.airplane.speed = self.airplane.speed - (self.airplane.speed * 0.25)
-                                self.airplane.distance += self.distanceTimestampPerSpeed[self.distanceTimestampPerSpeed.count-1].distanceInMeter
-                                self.distanceTimestampPerSpeed.append(DistanceMeasurement(speed: self.airplane.speed))
+                    self.airplane.distance += self.gameModel.distanceTimestampPerSpeed[self.gameModel.distanceTimestampPerSpeed.count-1].distanceInMeter
+                    self.gameModel.distanceTimestampPerSpeed.append(DistanceMeasurement(speed: self.airplane.speed))
                                 self.speedLabel.text = String(self.airplane.speed)
                                 print("Crashed with cloud")
                             }
                             
-                            self.computeDifficulty()
                             self.computeWind()
                             self.manageClouds()
-                            self.runningTime = aTimer.fireDate.timeIntervalSince(self.startDate)
+                self.gameModel.runningTime = aTimer.fireDate.timeIntervalSince(self.gameModel.startDate)
                             self.updateValues()
             }
         }
     }
-    
-    static func getGameResultArray() -> [GameResult] {
-        do {
-            if let docDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first{
-                let fileURL = docDir.appendingPathComponent("results.txt")
-                let jsonString = try String(contentsOf: fileURL)
-                let jsonData = jsonString.data(using: .utf8) ?? Data()
-                let array = try JSONDecoder().decode([GameResult].self, from: jsonData)
-                print("Saved new game result list successfully.")
-                return array
-            }
-        }catch {
-            print("Error while saving game result list.")
-        }
-        return [GameResult]()
-    }
-    
-    func isTopTenGame() -> Bool {
-        let gameResultArray = GameViewController.getGameResultArray()
-        for gameResult in gameResultArray{
-            if airplane.distance > gameResult.distance {
-                return true
-            }
-        }
-        
-        if gameResultArray.count < 10 {
-            return true
-        }
-        
-        return false
-    }
-    
-    func replaceOrAddGameResult(newGameResult: GameResult) -> [GameResult] {
-        var gameResults = GameViewController.getGameResultArray()
-        gameResults = gameResults.sorted(by: {$0.distance > $1.distance})
-        
-        if gameResults.count > 9 {
-            gameResults.removeLast()
-        }
-        
-        gameResults.append(newGameResult)
-        gameResults = gameResults.sorted(by: {$0.distance > $1.distance})
-        return gameResults
-    }
-    
-    func createGameResult() -> GameResult {
-        if(airplane.speed <= airplane.demolitionSpeed){
-            airplane.crashReason = false
-        }
-                
-        let result = GameResult(distance: self.airplane.distance.roundToDecimal(2), runningTime: runningTime.roundToDecimal(2), startedAt: startDate, endingSpeed: airplane.speed.roundToDecimal(2), crashReason: airplane.crashReason)
-        
-        return result
-    }
-    
-    func storeGame(){
-        var gameResultArray = GameViewController.getGameResultArray()
-        let result = createGameResult()
-        
-        print("Try to store Object: ", result.description())
 
-        gameResultArray = replaceOrAddGameResult(newGameResult: result)
 
-        let json = try! JSONEncoder().encode(gameResultArray)
-        let jsonString = String(data: json, encoding: .utf8)!
-        
-        do {
-            if let docDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                
-                let fileURL = docDir.appendingPathComponent("results.txt")
-                try jsonString.write(to: fileURL, atomically: false, encoding: .utf8)
-                print("Saved new game result list successfully.")
-            }
-        }catch {
-            print("Error while saving game result list.")
-        }
+    
+
+    func showToast(message : String) {
+
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center;
+        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
     }
 }
 
@@ -281,7 +214,11 @@ struct GameResult: Codable{
     }
     
     func description() -> String{
-        return "Running Time: \(self.runningTime) Started At: \(self.startedAt.stripTime().description). Ending Speed: \(self.endingSpeed). Crash Reason: \(self.crashReason ? "Time" : "Speed")"
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        
+        return "Flight Time: \(self.runningTime) seconds, Started At: \(formatter.string(for: self.startedAt)!). Ending Speed: \(self.endingSpeed) kmh. Crash Reason: \(self.crashReason ? "Time" : "Speed")"
     }
 }
 

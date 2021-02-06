@@ -1,0 +1,45 @@
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "2Xh-fd-qYM"; */
+"2Xh-fd-qYM.title" = "Item";
+
+/* Class = "UILabel"; text = "Flight Simulator"; ObjectID = "BqG-tr-RxG"; */
+"BqG-tr-RxG.text" = "Flight Simulator";
+
+/* Class = "UINavigationItem"; title = "Flight Simulator"; ObjectID = "FB5-h3-x3g"; */
+"FB5-h3-x3g.title" = "Flight Simulator";
+
+/* Class = "UILabel"; text = "Speed:"; ObjectID = "I3S-Gu-9Ph"; */
+"I3S-Gu-9Ph.text" = "Speed:";
+
+/* Class = "UIButton"; normalTitle = "Highscore"; ObjectID = "Jwd-xf-DIM"; */
+"Jwd-xf-DIM.normalTitle" = "Highscore";
+
+/* Class = "UILabel"; text = "Distance:"; ObjectID = "LIB-eh-IZa"; */
+"LIB-eh-IZa.text" = "Distance:";
+
+/* Class = "UILabel"; text = "100.0"; ObjectID = "Lai-up-2jN"; */
+"Lai-up-2jN.text" = "100.0";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "PoW-cD-OoW"; */
+"PoW-cD-OoW.text" = "Title";
+
+/* Class = "UINavigationItem"; title = "Highscores"; ObjectID = "b9r-lb-ty5"; */
+"b9r-lb-ty5.title" = "Highscores";
+
+/* Class = "UIButton"; normalTitle = "Spielen"; ObjectID = "cGd-RQ-CHt"; */
+"cGd-RQ-CHt.normalTitle" = "Spielen";
+
+/* Class = "UILabel"; text = "100.0"; ObjectID = "imR-le-zxe"; */
+"imR-le-zxe.text" = "100.0";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "ksk-nK-K4Z"; */
+"ksk-nK-K4Z.text" = "Subtitle";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "kwm-fP-IJp"; */
+"kwm-fP-IJp.text" = "Label";
+
+/* Class = "UILabel"; text = "100.0"; ObjectID = "xDX-JK-N82"; */
+"xDX-JK-N82.text" = "100.0";
+
+/* Class = "UILabel"; text = "Time:"; ObjectID = "ziH-TN-2Uo"; */
+"ziH-TN-2Uo.text" = "Time:";

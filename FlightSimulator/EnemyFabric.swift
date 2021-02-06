@@ -7,14 +7,20 @@
 
 import UIKit
 
-class CloudFabric {
+//EnemyFabric produces clouds or ghosts, depending on the users settings.
+class EnemyFabric {
     
     let screenWidth = UIScreen.main.fixedCoordinateSpace.bounds.width
     let screenHeight = UIScreen.main.fixedCoordinateSpace.bounds.height
+    var cloudOption = false
+    
+    init(){
+        cloudOption = UserDefaults.standard.bool(forKey: Constants.CLOUD_OPTION)
+    }
     
     func createCloud() -> Cloud{
         let x = CGFloat(Int.random(in: 35..<Int(screenWidth - 35)))
-        let imgView = UIImageView(image: UIImage(imageLiteralResourceName: "wolke"))
+        let imgView = UIImageView(image: UIImage(imageLiteralResourceName: (cloudOption ? "wolke" : "ghost")))
         let size = CGFloat(Double.random(in: 0.08..<0.2))
         imgView.frame = CGRect(x: x, y: 0, width: screenWidth * size, height: screenWidth * size)
         

@@ -3,12 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC20834C25CDF1CC0020CA1A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC20834B25CDF1CC0020CA1A /* Constants.swift */; };
+		AC20835225CE0C4E0020CA1A /* PressableButton in Frameworks */ = {isa = PBXBuildFile; productRef = AC20835125CE0C4E0020CA1A /* PressableButton */; };
+		AC20835725CE0CFF0020CA1A /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC20835625CE0CFF0020CA1A /* GameModel.swift */; };
+		AC20836F25CF32470020CA1A /* PostGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC20836E25CF32470020CA1A /* PostGameController.swift */; };
 		AC8D0F0C25864D3A00E8B652 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D0F0B25864D3A00E8B652 /* TableViewController.swift */; };
-		AC8D0F212587FAA200E8B652 /* CloudFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D0F202587FAA200E8B652 /* CloudFabric.swift */; };
+		AC8D0F212587FAA200E8B652 /* EnemyFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D0F202587FAA200E8B652 /* EnemyFabric.swift */; };
 		AC8D0F262588051A00E8B652 /* Airplane.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D0F252588051A00E8B652 /* Airplane.swift */; };
 		ACA8CD862583F05B00B3D55E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CD852583F05B00B3D55E /* AppDelegate.swift */; };
 		ACA8CD882583F05B00B3D55E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CD872583F05B00B3D55E /* SceneDelegate.swift */; };
@@ -39,8 +43,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC20834B25CDF1CC0020CA1A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AC20835625CE0CFF0020CA1A /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		AC20835E25CF07770020CA1A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		AC20836225CF07770020CA1A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		AC20836E25CF32470020CA1A /* PostGameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostGameController.swift; sourceTree = "<group>"; };
 		AC8D0F0B25864D3A00E8B652 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
-		AC8D0F202587FAA200E8B652 /* CloudFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFabric.swift; sourceTree = "<group>"; };
+		AC8D0F202587FAA200E8B652 /* EnemyFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyFabric.swift; sourceTree = "<group>"; };
 		AC8D0F252588051A00E8B652 /* Airplane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airplane.swift; sourceTree = "<group>"; };
 		ACA8CD822583F05B00B3D55E /* FlightSimulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlightSimulator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACA8CD852583F05B00B3D55E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC20835225CE0C4E0020CA1A /* PressableButton in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,10 +124,13 @@
 				AC8D0F252588051A00E8B652 /* Airplane.swift */,
 				AC8D0F0B25864D3A00E8B652 /* TableViewController.swift */,
 				ACA8CDB82583F43400B3D55E /* GameViewController.swift */,
-				AC8D0F202587FAA200E8B652 /* CloudFabric.swift */,
+				AC20836E25CF32470020CA1A /* PostGameController.swift */,
+				AC20835625CE0CFF0020CA1A /* GameModel.swift */,
+				AC8D0F202587FAA200E8B652 /* EnemyFabric.swift */,
 				ACA8CD8E2583F05B00B3D55E /* Assets.xcassets */,
 				ACA8CD902583F05B00B3D55E /* LaunchScreen.storyboard */,
 				ACA8CD932583F05B00B3D55E /* Info.plist */,
+				AC20834B25CDF1CC0020CA1A /* Constants.swift */,
 			);
 			path = FlightSimulator;
 			sourceTree = "<group>";
@@ -156,6 +169,9 @@
 			dependencies = (
 			);
 			name = FlightSimulator;
+			packageProductDependencies = (
+				AC20835125CE0C4E0020CA1A /* PressableButton */,
+			);
 			productName = FlightSimulator;
 			productReference = ACA8CD822583F05B00B3D55E /* FlightSimulator.app */;
 			productType = "com.apple.product-type.application";
@@ -225,8 +241,12 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = ACA8CD792583F05B00B3D55E;
+			packageReferences = (
+				AC20835025CE0C4E0020CA1A /* XCRemoteSwiftPackageReference "CMPressableButton" */,
+			);
 			productRefGroup = ACA8CD832583F05B00B3D55E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -272,11 +292,14 @@
 			files = (
 				ACA8CDB92583F43400B3D55E /* GameViewController.swift in Sources */,
 				ACA8CD8A2583F05B00B3D55E /* ViewController.swift in Sources */,
-				AC8D0F212587FAA200E8B652 /* CloudFabric.swift in Sources */,
+				AC20835725CE0CFF0020CA1A /* GameModel.swift in Sources */,
+				AC20836F25CF32470020CA1A /* PostGameController.swift in Sources */,
+				AC8D0F212587FAA200E8B652 /* EnemyFabric.swift in Sources */,
 				ACA8CD862583F05B00B3D55E /* AppDelegate.swift in Sources */,
 				AC8D0F262588051A00E8B652 /* Airplane.swift in Sources */,
 				AC8D0F0C25864D3A00E8B652 /* TableViewController.swift in Sources */,
 				ACA8CD882583F05B00B3D55E /* SceneDelegate.swift in Sources */,
+				AC20834C25CDF1CC0020CA1A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +339,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				ACA8CD8C2583F05B00B3D55E /* Base */,
+				AC20835E25CF07770020CA1A /* de */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -324,6 +348,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				ACA8CD912583F05B00B3D55E /* Base */,
+				AC20836225CF07770020CA1A /* de */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -335,6 +360,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -396,6 +422,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -609,6 +636,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AC20835025CE0C4E0020CA1A /* XCRemoteSwiftPackageReference "CMPressableButton" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CM-Material/CMPressableButton";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AC20835125CE0C4E0020CA1A /* PressableButton */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC20835025CE0C4E0020CA1A /* XCRemoteSwiftPackageReference "CMPressableButton" */;
+			productName = PressableButton;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = ACA8CD7A2583F05B00B3D55E /* Project object */;
 }

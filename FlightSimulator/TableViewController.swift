@@ -9,7 +9,7 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    var gameResults = GameViewController.getGameResultArray()
+    var gameResults = PostGameController.getGameResultArray()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +19,7 @@ class TableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -43,6 +44,18 @@ class TableViewController: UITableViewController {
         
         title.text = String(gameResult.distance) + " Meter"
         info.text = gameResult.description()
+        
+        if indexPath.row == 0 {
+            cell.contentView.backgroundColor = UIColor(hue: 0.2667, saturation: 1, brightness: 0.89, alpha: 1.0)
+        }
+        
+        if indexPath.row == 1 {
+            cell.contentView.backgroundColor = UIColor(hue: 0.2667, saturation: 1, brightness: 0.89, alpha: 0.5)
+        }
+        
+        if indexPath.row == 2 {
+            cell.contentView.backgroundColor = UIColor(hue: 0.2667, saturation: 1, brightness: 0.89, alpha: 0.2)
+        }
         
         return cell
     }
