@@ -9,6 +9,9 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
+    /*
+     All Game Results
+     */
     var gameResults = PostGameController.getGameResultArray()
 
     override func viewDidLoad() {
@@ -45,22 +48,28 @@ class TableViewController: UITableViewController {
         title.text = String(gameResult.distance) + " Meter"
         info.text = gameResult.description()
         
-        if indexPath.row == 0 {
-            cell.contentView.backgroundColor = UIColor(hue: 0.2667, saturation: 1, brightness: 0.89, alpha: 1.0)
-        }
-        
-        if indexPath.row == 1 {
-            cell.contentView.backgroundColor = UIColor(hue: 0.2667, saturation: 1, brightness: 0.89, alpha: 0.5)
-        }
-        
-        if indexPath.row == 2 {
-            cell.contentView.backgroundColor = UIColor(hue: 0.2667, saturation: 1, brightness: 0.89, alpha: 0.2)
-        }
+        colorFirstThree(cell: cell, row: indexPath.row)
         
         return cell
     }
     
-
+    /*
+     Colors the first three places in the table view
+     */
+    private func colorFirstThree(cell: UITableViewCell, row: Int){
+        if row == 0 {
+            cell.contentView.backgroundColor = UIColor(hue: 0.2667, saturation: 1, brightness: 0.89, alpha: 1.0)
+        }
+        
+        if row == 1 {
+            cell.contentView.backgroundColor = UIColor(hue: 0.2667, saturation: 1, brightness: 0.89, alpha: 0.5)
+        }
+        
+        if row == 2 {
+            cell.contentView.backgroundColor = UIColor(hue: 0.2667, saturation: 1, brightness: 0.89, alpha: 0.2)
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

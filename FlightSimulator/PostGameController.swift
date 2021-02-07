@@ -9,6 +9,9 @@ import Foundation
 
 class PostGameController{
     
+    /*
+     Stores a Game Result Object
+     */
     func storeGame(airplane: Airplane, gameModel: GameModel){
         var gameResultArray = PostGameController.getGameResultArray()
         let result = createGameResult(airplane: airplane, gameModel: gameModel)
@@ -25,13 +28,15 @@ class PostGameController{
                 
                 let fileURL = docDir.appendingPathComponent("results.txt")
                 try jsonString.write(to: fileURL, atomically: false, encoding: .utf8)
-                print("Saved new game result list successfully.")
             }
         }catch {
             print("Error while saving game result list.")
         }
     }
     
+    /*
+     Creates the GameResult Object according to the stats
+     */
     func createGameResult(airplane: Airplane, gameModel: GameModel) -> GameResult {
         if(airplane.speed <= airplane.demolitionSpeed){
             airplane.crashReason = false
@@ -42,6 +47,11 @@ class PostGameController{
         return result
     }
     
+    /*
+     Replaces a game result, if the gameresult was better than any existing.
+     Adds the game result if there where not 10 results yet.
+     Adds the game result to the correct place.
+     */
     func replaceOrAddGameResult(newGameResult: GameResult) -> [GameResult] {
         var gameResults = PostGameController.getGameResultArray()
         gameResults = gameResults.sorted(by: {$0.distance > $1.distance})
@@ -55,6 +65,9 @@ class PostGameController{
         return gameResults
     }
     
+    /*
+     Checks, if this game was a top-ten-result
+     */
     func isTopTenGame(airplane: Airplane) -> Bool {
         let gameResultArray = PostGameController.getGameResultArray()
         for gameResult in gameResultArray{
@@ -70,6 +83,9 @@ class PostGameController{
         return false
     }
     
+    /*
+     Restores the GameResult Array, which holds the top-ten results
+     */
     static func getGameResultArray() -> [GameResult] {
         do {
             if let docDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first{
@@ -77,7 +93,6 @@ class PostGameController{
                 let jsonString = try String(contentsOf: fileURL)
                 let jsonData = jsonString.data(using: .utf8) ?? Data()
                 let array = try JSONDecoder().decode([GameResult].self, from: jsonData)
-                print("Saved new game result list successfully.")
                 return array
             }
         }catch {

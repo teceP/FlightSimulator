@@ -9,6 +9,9 @@ import UIKit
 
 class Airplane{
         
+    /*
+     Image of the Airplance
+     */
     var image: UIImageView
     
     let screenWidth = UIScreen.main.fixedCoordinateSpace.bounds.width

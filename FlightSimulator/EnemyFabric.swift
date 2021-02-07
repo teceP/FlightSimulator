@@ -12,13 +12,24 @@ class EnemyFabric {
     
     let screenWidth = UIScreen.main.fixedCoordinateSpace.bounds.width
     let screenHeight = UIScreen.main.fixedCoordinateSpace.bounds.height
+    
+    /*
+     If this is true, clouds will be produced.
+     False, ghost will be produced.
+     */
     var cloudOption = false
     
+    /*
+     Restores the cloud option from the UserDefaults
+     */
     init(){
         cloudOption = UserDefaults.standard.bool(forKey: Constants.CLOUD_OPTION)
     }
     
-    func createCloud() -> Cloud{
+    /*
+     Creates an enemy
+     */
+    func createEnemy() -> Enemy{
         let x = CGFloat(Int.random(in: 35..<Int(screenWidth - 35)))
         let imgView = UIImageView(image: UIImage(imageLiteralResourceName: (cloudOption ? "wolke" : "ghost")))
         let size = CGFloat(Double.random(in: 0.08..<0.2))
@@ -37,12 +48,15 @@ class EnemyFabric {
         
         imgView.layer.add(animation, forKey: "basic")
 
-        return Cloud(image: imgView, date: Date())
+        return Enemy(image: imgView, date: Date())
     }
     
 }
 
-struct Cloud {
+/*
+ Enemy Struct
+ */
+struct Enemy {
     var image: UIImageView
     var date: Date
     var collided: Bool

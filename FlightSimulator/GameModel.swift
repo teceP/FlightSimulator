@@ -8,6 +8,9 @@
 import Foundation
 import AVFoundation
 
+/*
+ Game Model, contains all used variables
+ */
 class GameModel{
     var doLoop = true
     var player = AVAudioPlayer()
@@ -17,7 +20,7 @@ class GameModel{
     let startDate = Date()
     var runningTime = 0.0
     var cloudSpawnY: Float = 0
-    var clouds: Array<Cloud> = Array()
+    var enemies: Array<Enemy> = Array()
     var difficulty = 200
     var minSpawnDistance = 1.0
     var cloudSpeed = 2.0
