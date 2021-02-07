@@ -70,6 +70,7 @@ class PostGameController{
      */
     func isTopTenGame(airplane: Airplane) -> Bool {
         let gameResultArray = PostGameController.getGameResultArray()
+        
         for gameResult in gameResultArray{
             if airplane.distance > gameResult.distance {
                 return true

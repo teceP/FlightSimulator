@@ -23,7 +23,6 @@
 		ACA8CD8A2583F05B00B3D55E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CD892583F05B00B3D55E /* ViewController.swift */; };
 		ACA8CD8D2583F05B00B3D55E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA8CD8B2583F05B00B3D55E /* Main.storyboard */; };
 		ACA8CD8F2583F05B00B3D55E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACA8CD8E2583F05B00B3D55E /* Assets.xcassets */; };
-		ACA8CD922583F05B00B3D55E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACA8CD902583F05B00B3D55E /* LaunchScreen.storyboard */; };
 		ACA8CD9D2583F05C00B3D55E /* FlightSimulatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CD9C2583F05C00B3D55E /* FlightSimulatorTests.swift */; };
 		ACA8CDA82583F05C00B3D55E /* FlightSimulatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CDA72583F05C00B3D55E /* FlightSimulatorUITests.swift */; };
 		ACA8CDB92583F43400B3D55E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA8CDB82583F43400B3D55E /* GameViewController.swift */; };
@@ -50,7 +49,6 @@
 		AC20834B25CDF1CC0020CA1A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AC20835625CE0CFF0020CA1A /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		AC20835E25CF07770020CA1A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
-		AC20836225CF07770020CA1A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AC20836E25CF32470020CA1A /* PostGameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostGameController.swift; sourceTree = "<group>"; };
 		AC20837625CF49760020CA1A /* background_music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background_music.mp3; sourceTree = "<group>"; };
 		AC20838325D05A720020CA1A /* synth.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = synth.mp3; sourceTree = "<group>"; };
@@ -65,7 +63,6 @@
 		ACA8CD892583F05B00B3D55E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ACA8CD8C2583F05B00B3D55E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ACA8CD8E2583F05B00B3D55E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		ACA8CD912583F05B00B3D55E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ACA8CD932583F05B00B3D55E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACA8CD982583F05C00B3D55E /* FlightSimulatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlightSimulatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACA8CD9C2583F05C00B3D55E /* FlightSimulatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightSimulatorTests.swift; sourceTree = "<group>"; };
@@ -129,6 +126,7 @@
 		ACA8CD842583F05B00B3D55E /* FlightSimulator */ = {
 			isa = PBXGroup;
 			children = (
+				AC20835625CE0CFF0020CA1A /* GameModel.swift */,
 				ACA8CD852583F05B00B3D55E /* AppDelegate.swift */,
 				ACA8CD872583F05B00B3D55E /* SceneDelegate.swift */,
 				ACA8CD892583F05B00B3D55E /* ViewController.swift */,
@@ -137,10 +135,8 @@
 				AC8D0F0B25864D3A00E8B652 /* TableViewController.swift */,
 				ACA8CDB82583F43400B3D55E /* GameViewController.swift */,
 				AC20836E25CF32470020CA1A /* PostGameController.swift */,
-				AC20835625CE0CFF0020CA1A /* GameModel.swift */,
 				AC8D0F202587FAA200E8B652 /* EnemyFabric.swift */,
 				ACA8CD8E2583F05B00B3D55E /* Assets.xcassets */,
-				ACA8CD902583F05B00B3D55E /* LaunchScreen.storyboard */,
 				ACA8CD932583F05B00B3D55E /* Info.plist */,
 				AC20834B25CDF1CC0020CA1A /* Constants.swift */,
 			);
@@ -279,7 +275,6 @@
 				AC20838725D05A720020CA1A /* funny.mp3 in Resources */,
 				AC20838825D05A720020CA1A /* highway.mp3 in Resources */,
 				AC20837725CF49770020CA1A /* background_music.mp3 in Resources */,
-				ACA8CD922583F05B00B3D55E /* LaunchScreen.storyboard in Resources */,
 				ACA8CD8F2583F05B00B3D55E /* Assets.xcassets in Resources */,
 				ACA8CD8D2583F05B00B3D55E /* Main.storyboard in Resources */,
 			);
@@ -358,15 +353,6 @@
 				AC20835E25CF07770020CA1A /* de */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		ACA8CD902583F05B00B3D55E /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				ACA8CD912583F05B00B3D55E /* Base */,
-				AC20836225CF07770020CA1A /* de */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
